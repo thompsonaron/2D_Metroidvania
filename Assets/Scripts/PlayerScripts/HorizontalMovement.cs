@@ -88,7 +88,7 @@ namespace MetroidvaniaTools
             {
                 if (character.isFacingLeft)
                 {
-                    //character.isFacingLeft = false;
+                    character.isFacingLeft = false;
                     Flip();
                 }
 
@@ -101,7 +101,7 @@ namespace MetroidvaniaTools
             {
                 if (!character.isFacingLeft)
                 {
-                    //character.isFacingLeft = true;
+                    character.isFacingLeft = true;
                     Flip();
                 }
                 if (currentSpeed < -maxSpeed)
