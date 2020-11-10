@@ -66,6 +66,7 @@ namespace MetroidvaniaTools
         {
             if (MovementPressed())
             {
+                anim.SetBool("Walking", true);
                 acceleration = maxSpeed / timeTillMaxSpeed;
                 runTime += Time.deltaTime;
                 currentSpeed = horizontalInput * acceleration * runTime;
@@ -74,6 +75,7 @@ namespace MetroidvaniaTools
             }
             else
             {
+                anim.SetBool("Walking", false);
                 acceleration = 0;
                 runTime = 0;
                 currentSpeed = 0;
@@ -117,7 +119,12 @@ namespace MetroidvaniaTools
             
             if (SprintingHeld())
             {
+                anim.SetBool("Sprinting", true);
                 currentSpeed *= sprintMultiplier;
+            }
+            else
+            {
+                anim.SetBool("Sprinting", false);
             }
         }
     }
