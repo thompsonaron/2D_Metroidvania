@@ -51,7 +51,7 @@ namespace MetroidvaniaTools
 
         protected virtual bool JumpPressed()
         {
-             if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 // check if falling and havent jumped
                 if (!character.isGrounded && numberOfJumpsLeft == maxNumberOfJumps)
@@ -70,6 +70,7 @@ namespace MetroidvaniaTools
                 numberOfJumpsLeft--;
                 if (numberOfJumpsLeft >= 0)
                 {
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
                     jumpCountDown = buttonHoldTime;
                     isJumping = true;
                 }
@@ -89,10 +90,9 @@ namespace MetroidvaniaTools
 
         protected virtual void IsJumping()
         {
-            
+
             if (isJumping)
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(Vector2.up * jumpForce);
                 AdditionallAir();
             }
@@ -129,15 +129,18 @@ namespace MetroidvaniaTools
             {
                 character.isGrounded = true;
                 numberOfJumpsLeft = maxNumberOfJumps;
+
             }
             else
             {
                 character.isGrounded = false;
-                if (Falling(0)&& rb.velocity.y < maxFallSpeed)
+                if (Falling(0) && rb.velocity.y < maxFallSpeed)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
                 }
             }
+            anim.SetBool("IsGrounded", character.isGrounded);
+            anim.SetFloat("VerticalSpeed", rb.velocity.y);
         }
 
         protected virtual bool Falling(float velocity)

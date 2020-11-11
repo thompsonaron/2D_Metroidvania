@@ -119,7 +119,7 @@ namespace MetroidvaniaTools
         {
             
             if (SprintingHeld())
-            {
+            { 
                 currentSpeed *= sprintMultiplier;
             }
         }

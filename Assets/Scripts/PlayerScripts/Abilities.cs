@@ -10,8 +10,6 @@ namespace MetroidvaniaTools
 
         protected override void Initializiation()
         {
-
-
             base.Initializiation();
 
             character = GetComponent<Character>();
