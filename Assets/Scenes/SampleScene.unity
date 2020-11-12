@@ -745,6 +745,8 @@ MonoBehaviour:
   maxJumpSpeed: 10
   maxFallSpeed: -10
   acceptedFallSpeed: -5
+  glideTime: 1.5
+  gravity: 0.5
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
