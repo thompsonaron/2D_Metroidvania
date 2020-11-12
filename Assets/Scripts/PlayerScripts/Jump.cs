@@ -166,7 +166,7 @@ namespace MetroidvaniaTools
 
         protected virtual bool Falling(float velocity)
         {
-            if (!isGrounded && rb.velocity.y < velocity)
+            if (!character.isGrounded && rb.velocity.y < velocity)
             {
                 return true;
             }

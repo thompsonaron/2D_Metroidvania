@@ -9,6 +9,7 @@ namespace MetroidvaniaTools
     {
         [HideInInspector] public bool isFacingLeft;
         [HideInInspector] public bool isGrounded;
+        [HideInInspector] public bool isCrouching;
 
         protected Collider2D col;
         protected Rigidbody2D rb;
