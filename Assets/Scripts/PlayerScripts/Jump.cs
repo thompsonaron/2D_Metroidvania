@@ -18,7 +18,7 @@ namespace MetroidvaniaTools
         [SerializeField] protected float maxFallSpeed;
         [SerializeField] protected float acceptedFallSpeed;
         [SerializeField] protected float glideTime;
-        [SerializeField][Range(-2, 2)] protected float gravity;
+        [SerializeField] [Range(-2, 2)] protected float gravity;
         [SerializeField] protected LayerMask collisionLayer;
 
         private bool isJumping;
@@ -110,14 +110,17 @@ namespace MetroidvaniaTools
 
         protected virtual void Gliding()
         {
-            if (Falling(0) && JumpHeld() )
+            if (Falling(0) && JumpHeld())
             {
                 fallCountDown -= Time.deltaTime;
                 if (fallCountDown > 0 && rb.velocity.y > acceptedFallSpeed)
                 {
                     FallSpeed(gravity);
+                    anim.SetBool("Gliding", true);
+                    return;
                 }
             }
+            anim.SetBool("Gliding", false);
         }
 
         protected virtual void AdditionallAir()
@@ -175,7 +178,7 @@ namespace MetroidvaniaTools
 
         protected virtual void FallSpeed(float speed)
         {
-            rb.velocity = new Vector2(  rb.velocity.x, rb.velocity.y * speed);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * speed);
         }
 
     }

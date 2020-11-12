@@ -80,7 +80,7 @@ namespace MetroidvaniaTools
                 runTime = 0;
                 currentSpeed = 0;
             }
-            Debug.Log(currentSpeed);
+
             anim.SetFloat("CurrentSpeed", currentSpeed);
             rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
         }
