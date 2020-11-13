@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace MetroidvaniaTools
 {
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class Dash : Abilities
     {
         [SerializeField] protected float dashForce;
@@ -14,6 +15,13 @@ namespace MetroidvaniaTools
 
         private bool canDash;
         private float dashCountDown;
+        private CapsuleCollider2D capsuleCollider2D;
+
+        protected override void Initializiation()
+        {
+            base.Initializiation();
+            capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        }
 
         protected virtual void Update()
         {
@@ -64,6 +72,9 @@ namespace MetroidvaniaTools
         {
             dashCountDown = dashCoolDownTime;
             character.isDashing = true;
+            capsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
+            capsuleCollider2D.size = new Vector2(capsuleCollider2D.size.y, capsuleCollider2D.size.x);
+            anim.SetBool("Dashing", true);
             StartCoroutine(FinishedDashing());
         }
 
@@ -97,6 +108,10 @@ namespace MetroidvaniaTools
         protected virtual IEnumerator FinishedDashing()
         {
             yield return new WaitForSeconds(dashAmountTime);
+            capsuleCollider2D.direction = CapsuleDirection2D.Vertical;
+            capsuleCollider2D.size = new Vector2(capsuleCollider2D.size.y, capsuleCollider2D.size.x);
+            anim.SetBool("Dashing", false);
+
             character.isDashing = false;
             FallSpeed(1);
             movement.enabled = true;
