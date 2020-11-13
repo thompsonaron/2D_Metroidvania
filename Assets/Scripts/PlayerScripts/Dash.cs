@@ -51,6 +51,7 @@ namespace MetroidvaniaTools
         {
             if (Input.GetKeyDown(KeyCode.Z) && canDash)
             {
+                Dashing();
                 return true;
             }
             else
