@@ -813,6 +813,7 @@ MonoBehaviour:
   isFacingLeft: 0
   isGrounded: 0
   isCrouching: 0
+  isDashing: 0
   limitAirJumps: 1
   maxNumberOfJumps: 3
   jumpForce: 150
@@ -842,6 +843,7 @@ MonoBehaviour:
   isFacingLeft: 0
   isGrounded: 0
   isCrouching: 0
+  isDashing: 0
   timeTillMaxSpeed: 0.75
   maxSpeed: 6
   sprintMultiplier: 2
@@ -861,6 +863,7 @@ MonoBehaviour:
   isFacingLeft: 0
   isGrounded: 0
   isCrouching: 0
+  isDashing: 0
 --- !u!70 &5078455018505588242
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -913,7 +916,30 @@ MonoBehaviour:
   isFacingLeft: 0
   isGrounded: 0
   isCrouching: 0
+  isDashing: 0
   colliderMultiplier: 0.5
   layers:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &5078455018505588245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5078455018505588238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aac374c02018ff42b02236a28c01016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFacingLeft: 0
+  isGrounded: 0
+  isCrouching: 0
+  isDashing: 0
+  dashForce: 150
+  dashCoolDownTime: 3
+  dashAmountTime: 0.5
+  dashingLayers:
+    serializedVersion: 2
+    m_Bits: 512

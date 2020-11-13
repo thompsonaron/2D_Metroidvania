@@ -164,22 +164,7 @@ namespace MetroidvaniaTools
             anim.SetFloat("VerticalSpeed", rb.velocity.y);
         }
 
-        protected virtual bool Falling(float velocity)
-        {
-            if (!character.isGrounded && rb.velocity.y < velocity)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        protected virtual void FallSpeed(float speed)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * speed);
-        }
+        
 
     }
 }
