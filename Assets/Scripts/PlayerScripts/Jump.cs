@@ -14,14 +14,17 @@ namespace MetroidvaniaTools
         [SerializeField] protected float holdForce;
         [SerializeField] protected float buttonHoldTime;
         [SerializeField] protected float distanceToColllider;
+        [SerializeField] protected float horizontalWallJumpForce;
+        [SerializeField] protected float verticalWallJumpForce;
         [SerializeField] protected float maxJumpSpeed;
         [SerializeField] protected float maxFallSpeed;
         [SerializeField] protected float acceptedFallSpeed;
         [SerializeField] protected float glideTime;
         [SerializeField] [Range(-2, 2)] protected float gravity;
-        [SerializeField] protected LayerMask collisionLayer;
+        public LayerMask collisionLayer;
 
         private bool isJumping;
+        private bool isWallJumping;
         private float jumpCountDown;
         private float fallCountDown;
         private int numberOfJumpsLeft;
@@ -39,6 +42,15 @@ namespace MetroidvaniaTools
         {
             JumpPressed();
             JumpHeld();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            IsJumping();
+            Gliding();
+            GroundCheck();
+            WallSliding();
+            WallJump();
         }
 
         protected virtual bool JumpHeld()
@@ -69,7 +81,12 @@ namespace MetroidvaniaTools
                     isJumping = false;
                     return false;
                 }
-
+                // wall jumping
+                if (character.isWallSliding)
+                {
+                    isWallJumping = true;
+                    return false;
+                }
                 // real code
                 numberOfJumpsLeft--;
                 if (numberOfJumpsLeft >= 0)
@@ -85,13 +102,6 @@ namespace MetroidvaniaTools
             {
                 return false;
             }
-        }
-
-        protected virtual void FixedUpdate()
-        {
-            IsJumping();
-            Gliding();
-            GroundCheck();
         }
 
         protected virtual void IsJumping()
@@ -164,7 +174,46 @@ namespace MetroidvaniaTools
             anim.SetFloat("VerticalSpeed", rb.velocity.y);
         }
 
-        
+        protected virtual bool WallSliding()
+        {
+            
+            if (WallCheck())
+            {
+                // gravity is glide speed
+                FallSpeed(gravity);
+                character.isWallSliding = true;
+                return true;
+            }
+            else
+            {
+                character.isWallSliding = false;
+                return false;
+            }
+        }
 
+        protected virtual bool WallCheck()
+        {
+            if ((!character.isFacingLeft && CollisionCheck(Vector2.right, distanceToColllider, collisionLayer)) || (character.isFacingLeft && CollisionCheck(Vector2.left, distanceToColllider, collisionLayer)) && movement.MovementPressed() && !character.isGrounded)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual void WallJump()
+        {
+            if (isWallJumping)
+            {
+                rb.AddForce(Vector2.up * verticalWallJumpForce);
+                if (!character.isFacingLeft)
+                {
+                    rb.AddForce(Vector2.right * horizontalWallJumpForce);
+                }
+                if (character.isFacingLeft)
+                {
+                    rb.AddForce(Vector2.left * horizontalWallJumpForce);
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace MetroidvaniaTools
             SprintingHeld();
         }
 
-        protected virtual bool MovementPressed()
+        public virtual bool MovementPressed()
         {
             float _horizontalInput = Input.GetAxis("Horizontal");
             if (_horizontalInput != 0)
@@ -126,6 +126,10 @@ namespace MetroidvaniaTools
             if (isCrouching)
             {
                 currentSpeed *= crouchSpeedMultiplier;
+            }
+            if ((!character.isFacingLeft && CollisionCheck(Vector2.right, 0.05f, jump.collisionLayer)) || (character.isFacingLeft && CollisionCheck(Vector2.left, 0.05f, jump.collisionLayer)))
+            {
+                currentSpeed = 0.1f;
             }
         }
     }
