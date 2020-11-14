@@ -88,12 +88,18 @@ namespace MetroidvaniaTools
 
         protected void CheckDirection()
         {
+            //if (isWallSliding || character.isWallSliding)
+            //{
+            //    return;
+            //}
+
             if (currentSpeed > 0)
             {
                 if (character.isFacingLeft)
                 {
-                    character.isFacingLeft = false;
                     Flip();
+                    isFacingLeft = false;
+                    character.isFacingLeft = false;
                 }
 
                 if (currentSpeed > maxSpeed)
@@ -105,8 +111,9 @@ namespace MetroidvaniaTools
             {
                 if (!character.isFacingLeft)
                 {
-                    character.isFacingLeft = true;
                     Flip();
+                    isFacingLeft = true;
+                    character.isFacingLeft = true;
                 }
                 if (currentSpeed < -maxSpeed)
                 {
@@ -126,6 +133,10 @@ namespace MetroidvaniaTools
             if (isCrouching)
             {
                 currentSpeed *= crouchSpeedMultiplier;
+            }
+            if (character.isWallSliding)
+            {
+                currentSpeed = 0f;
             }
             if ((!character.isFacingLeft && CollisionCheck(Vector2.right, 0.05f, jump.collisionLayer)) || (character.isFacingLeft && CollisionCheck(Vector2.left, 0.05f, jump.collisionLayer)))
             {

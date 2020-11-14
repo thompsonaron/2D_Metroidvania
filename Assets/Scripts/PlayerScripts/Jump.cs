@@ -21,10 +21,13 @@ namespace MetroidvaniaTools
         [SerializeField] protected float acceptedFallSpeed;
         [SerializeField] protected float glideTime;
         [SerializeField] [Range(-2, 2)] protected float gravity;
+        [SerializeField] protected float wallJumpTime;
+
         public LayerMask collisionLayer;
 
         private bool isJumping;
         private bool isWallJumping;
+        public bool flipped;
         private float jumpCountDown;
         private float fallCountDown;
         private int numberOfJumpsLeft;
@@ -179,14 +182,28 @@ namespace MetroidvaniaTools
             
             if (WallCheck())
             {
+                if (!flipped)
+                {
+                    Flip();
+                    flipped = true;
+                }
                 // gravity is glide speed
                 FallSpeed(gravity);
                 character.isWallSliding = true;
+                isWallSliding = true;
+                anim.SetBool("WallSliding", true);
                 return true;
             }
             else
             {
                 character.isWallSliding = false;
+                isWallSliding = false;
+                anim.SetBool("WallSliding", false);
+                if (flipped && !isWallJumping)
+                {
+                    Flip();
+                    flipped = false;
+                }
                 return false;
             }
         }
@@ -207,13 +224,22 @@ namespace MetroidvaniaTools
                 rb.AddForce(Vector2.up * verticalWallJumpForce);
                 if (!character.isFacingLeft)
                 {
-                    rb.AddForce(Vector2.right * horizontalWallJumpForce);
+                    rb.AddForce(Vector2.left * horizontalWallJumpForce);
                 }
                 if (character.isFacingLeft)
                 {
-                    rb.AddForce(Vector2.left * horizontalWallJumpForce);
+                    rb.AddForce(Vector2.right * horizontalWallJumpForce);
                 }
+                StartCoroutine(WallJumped());
             }
+        }
+
+        protected virtual IEnumerator WallJumped()
+        {
+            movement.enabled = false;
+            yield return new WaitForSeconds(wallJumpTime);
+            movement.enabled = true;
+            isWallJumping = false;
         }
     }
 }

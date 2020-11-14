@@ -19,7 +19,8 @@ namespace MetroidvaniaTools
         protected HorizontalMovement movement;
         protected Jump jump;
 
-        private Vector2 facingLeft;
+        private Vector2 facingLeft = new Vector2(-0.25f, 0.25f);
+        private Vector2 facingRight = new Vector2(0.25f, 0.25f);
 
 
 
@@ -36,19 +37,25 @@ namespace MetroidvaniaTools
             anim = GetComponent<Animator>();
             movement = GetComponent<HorizontalMovement>();
             jump = GetComponent<Jump>();
-            facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+            //facingLeft = new Vector2(-transform.localScale.x, transform.localScale.y);
+            //facingRight = new Vector2(transform.localScale.x, transform.localScale.y);
+            //Debug.Log(facingLeft);
+            //Debug.Log(facingRight);
+
         }
 
         protected virtual void Flip()
         {
-            isFacingLeft = !isFacingLeft;
-            if (isFacingLeft)
+
+            if (isFacingLeft || (!isFacingLeft && isWallSliding))
             {
-                transform.localScale = facingLeft;
+                transform.localScale = facingRight;
             }
-            else
+            if (!isFacingLeft || (isFacingLeft && isWallSliding))
             {
-                transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+                //transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+                transform.localScale = facingLeft;
+
             }
         }
 
