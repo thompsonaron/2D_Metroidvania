@@ -25,14 +25,13 @@ namespace MetroidvaniaTools
 
         protected virtual void Update()
         {
-            DashPressed();
+            Dashing();
         }
 
         protected virtual void FixedUpdate()
         {
             DashMode();
             ResetDashCounter();
-
         }
 
         protected virtual void DashMode()
@@ -55,27 +54,19 @@ namespace MetroidvaniaTools
             }
         }
 
-        protected virtual bool DashPressed()
-        {
-            if (Input.GetKeyDown(KeyCode.Z) && canDash)
-            {
-                Dashing();
-                return true;
-            }
-            else
-            {
-            return false;
-            }
-        }
+       
 
         protected virtual void Dashing()
         {
-            dashCountDown = dashCoolDownTime;
-            character.isDashing = true;
-            capsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
-            capsuleCollider2D.size = new Vector2(capsuleCollider2D.size.y, capsuleCollider2D.size.x);
-            anim.SetBool("Dashing", true);
-            StartCoroutine(FinishedDashing());
+            if (input.DashPressed() && canDash)
+            {
+                dashCountDown = dashCoolDownTime;
+                character.isDashing = true;
+                capsuleCollider2D.direction = CapsuleDirection2D.Horizontal;
+                capsuleCollider2D.size = new Vector2(capsuleCollider2D.size.y, capsuleCollider2D.size.x);
+                anim.SetBool("Dashing", true);
+                StartCoroutine(FinishedDashing());
+            }
         }
 
         protected virtual void DashCollision(Vector2 direction, float distance, LayerMask collision)

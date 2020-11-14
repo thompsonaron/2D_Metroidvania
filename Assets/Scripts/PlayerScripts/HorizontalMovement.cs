@@ -29,7 +29,6 @@ namespace MetroidvaniaTools
         protected virtual void Update()
         {
             MovementPressed();
-            SprintingHeld();
         }
 
         public virtual bool MovementPressed()
@@ -46,17 +45,7 @@ namespace MetroidvaniaTools
             }
         }
 
-        protected virtual bool SprintingHeld()
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        
 
         protected virtual void FixedUpdate()
         {
@@ -126,7 +115,7 @@ namespace MetroidvaniaTools
         protected virtual void SpeedMultiplier()
         {
             
-            if (SprintingHeld())
+            if (input.SprintingHeld())
             { 
                 currentSpeed *= sprintMultiplier;
             }
